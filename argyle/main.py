@@ -1,4 +1,4 @@
-from upwork import *
+from upwork_scanner import *
 
 
 def run():

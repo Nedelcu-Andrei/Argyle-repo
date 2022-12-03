@@ -1,6 +1,6 @@
 import unittest
 import pytest
-from upwork import check_empty_fields
+from upwork_scanner import check_empty_fields
 
 
 class OtherUpworkTests(unittest.TestCase):
