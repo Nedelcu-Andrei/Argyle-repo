@@ -33,7 +33,7 @@ class UpworkScraper:
 
     def login(self):
         """
-        Logins into the website using the username, password and occasionaly the secret question.
+        Logins into the website using the username, password and occasionally the secret question.
         """
         try:
             # Create the browser, instantiate the page for it and go to url
@@ -91,31 +91,27 @@ class UpworkScraper:
 
             # Get valuable data
             name = html_body.css('a[class="profile-title"]::text').get().strip()
-            available_connects = html_body.css(
-                'section[data-test="sidebar-available-connects"] > a::text').get().strip()
-            hourse_per_week = html_body.css(
-                'div[data-test="freelancer-sidebar-availability"] > div:nth-child(2) > span > span::text').get().strip()
+            available_connects = html_body.css('section[data-test="sidebar-available-connects"] > a::text').get().strip()
+            hours_per_week = html_body.css('div[data-test="freelancer-sidebar-availability"] > div:nth-child(2) > span > span::text').get().strip()
             specialization = html_body.css('div.text-center > p::text').get().strip()
-            categories = [x.strip() for x in html_body.css(
-                'section[data-test="sidebar-categories"] > div:nth-child(2) > *::text').getall()]
-            profile_completness = html_body.css(
-                'div.profile-completeness-nudges-tiles-alternative > div > div > small::text').get().strip()
+            categories = [x.strip() for x in html_body.css('section[data-test="sidebar-categories"] > div:nth-child(2) > *::text').getall()]
+            profile_completeness = html_body.css('div.profile-completeness-nudges-tiles-alternative > div > div > small::text').get().strip()
 
             # Build the dict object
             data_dict = {
                 "name": name,
                 "specialization": specialization,
                 "available_connects": available_connects,
-                "hourse_per_week": hourse_per_week,
+                "hours_per_week": hours_per_week,
                 "categories": categories,
-                "profile_completness": profile_completness
+                "profile_completeness": profile_completeness
             }
 
             # Serialize it to json
             data_json = json.dumps(data_dict, indent=2)
 
             # Create the json file with the content
-            with open("level_1_task.json", "w") as outfile:
+            with open("../level_1_task.json", "w") as outfile:
                 outfile.write(data_json)
 
         except Exception as err:
@@ -152,27 +148,24 @@ class UpworkScraper:
             city = html_body.css('span[itemprop="locality"]::text').get().strip()
             state = html_body.css('span[itemprop="state-name"]::text').get().strip()
             country = html_body.css('span[itemprop="country-name"]::text').get().strip()
-            country_format = coco.convert(names=country, to='ISO2')
+            country_format = coco.convert(names=country, to='ISO2')  # Format the country name
 
             # Other data related to the profile object
             picture_url = html_body.css('div.up-presence-container > img.up-avatar::attr(src)').get().strip()
-            job_employer = html_body.css(
-                'section.up-card-section > div > ul > li > div > div > h4[role="presentation"]::text').get().split("|")
+            job_employer = html_body.css('section.up-card-section > div > ul > li > div > div > h4[role="presentation"]::text').get().split("|")
             employer = job_employer[-1].strip() if len(job_employer) > 1 else ""
 
             # Get rest of data available on the page and save it to metadata in the profile object
             # Freelance work related data
             specialization = html_body.css('section.up-card-section > div > div > div > h2::text').get().strip()
             hourly_rate = html_body.css('h3[role="presentation"] > span::text').get().strip()
-            hours_per_week = html_body.css(
-                'section.up-card-section > div.mt-30 > div:nth-child(2) > span::text').get().strip()
+            hours_per_week = html_body.css('section.up-card-section > div.mt-30 > div:nth-child(2) > span::text').get().strip()
 
             # Languages and military status data
             languages = html_body.css('ul.list-unstyled > li > div > strong::text').get().strip()
-            proeficiency = html_body.css('ul.list-unstyled > li > div > span::text').get().strip()
-            language = f"{languages} {proeficiency}"
-            military_status = html_body.css(
-                'section.up-card-section > div.mt-30 > div > div > span > strong::text').get().strip()
+            proficiency = html_body.css('ul.list-unstyled > li > div > span::text').get().strip()
+            language = f"{languages} {proficiency}"
+            military_status = html_body.css('section.up-card-section > div.mt-30 > div > div > span > strong::text').get().strip()
 
             # Education related data
             university = html_body.css('ul.list-unstyled > li > div > h5[role="presentation"]::text').get().strip()
@@ -209,12 +202,8 @@ class UpworkScraper:
             # Check for the popup window and close it if it appears
             self.check_popup(self.page.inner_html('body'))
 
-            # Get the html body
-            html_body = Selector(text=self.page.inner_html('body'))
-
             # Get the contact info url from the page and go to it
-            contact_info_url = html_body.css(
-                "ul[data-cy='dropdown-menu'] > li:nth-child(4) > ul > li > a::attr(href)").get()
+            contact_info_url = self.page.get_attribute("ul[data-cy='dropdown-menu'] > li:nth-child(4) > ul > li > a", "href")
             self.page.goto(f"{self.base_url}{contact_info_url}")
 
             # Check if the secret is needed, if not, wait for the page to load up
@@ -249,7 +238,7 @@ class UpworkScraper:
 
             # Get email and phone data
             phone_number = info_html.css('div[data-test="phone"]::text').get()
-            phone_number_format = format_phone_number(phone_number, implied_phone_region='US')
+            phone_number_format = format_phone_number(phone_number, implied_phone_region='US')  # Format the phone data
             e_mail = info_html.css('div[data-test="userEmail"]::text').get().strip()
 
             # Set it in the user data profile

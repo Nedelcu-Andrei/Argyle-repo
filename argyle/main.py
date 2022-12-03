@@ -1,5 +1,6 @@
 from upwork import *
 
+
 def run():
     cls = UpworkScraper()
     cls.login()

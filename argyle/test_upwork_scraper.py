@@ -31,14 +31,14 @@ class UpworkScraperTests(unittest.TestCase):
         assert self.page.inner_text('span[itemprop="country-name"]').strip() == 'United States'
         assert self.page.get_attribute("ul[data-cy='dropdown-menu'] > li:nth-child(4) > ul > li > a", "href") == "/freelancers/settings/contactInfo"
 
-    def test_scrape_contact_info_page(self):
+    def test_required_secret_auth(self):
         self.page.click('button[data-cy="close-button"] > div > svg')
         self.page.click('a.profile-title')
         self.page.click('#main > div > div > div > div > div > div:nth-child(3) > div.up-card.py-0.my-0.d-none.d-lg-block > section.up-card-section.py-30 > div > div.col.col-auto.min-width-380.text-right > div > a.up-btn.up-btn-primary.m-0')
         self.page.wait_for_selector('#control_save')
         assert self.page.locator('#control_save').is_visible()
 
-    def test_collect_contact_info_data(self):
+    def test_scrape_contact_info_data(self):
         self.page.click('button[data-cy="close-button"] > div > svg')
         self.page.click('a.profile-title')
         self.page.click('#main > div > div > div > div > div > div:nth-child(3) > div.up-card.py-0.my-0.d-none.d-lg-block > section.up-card-section.py-30 > div > div.col.col-auto.min-width-380.text-right > div > a.up-btn.up-btn-primary.m-0')
