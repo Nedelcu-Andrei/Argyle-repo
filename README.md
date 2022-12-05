@@ -9,7 +9,8 @@
   - Missing fields handled as a check that completes them with a string that specifies that the data is missing.
   - Error handling that indicates in which method the error occured and the error message.
   - Retry added in case the scanning fails.
-  - Unit-tests for method outside of main class and for the scanner.
+  - Unit-tests for for the parser and integration tests for the scanner.
+  - The whole process is split between the a scanning process and a parsing process.
   
   **Note: From Scrapy was used only the Selector import for parsing the HTML body of the responses. Was used instead of the playwright selectors for better
   error managemant and easier implementations of conditions in the code.
