@@ -86,10 +86,12 @@ class UpworkScanner:
             self.page.click('a.profile-title')
 
             # Check if the next page has been loaded
-            self.page.wait_for_selector('section.up-card-section > div > ul > li > div > div > h4[role="presentation"]')
+            self.page.wait_for_selector(
+                'section.up-card-section > div > ul > li > div > div > h4[role="presentation"]')
 
             # Prase the data
-            self.parser.parse_profile_data(self.page.inner_html('body'), user_data)
+            self.parser.parse_profile_data(self.page.inner_html('body'),
+                                           user_data)
 
         except Exception as err:
             self.handle_error(err, "scan_profile_page")
@@ -99,12 +101,15 @@ class UpworkScanner:
         Scan contact info page for the user profile data.
         """
         try:
-            self.page.once("load", lambda: print("Scanning contact info page..."))
+            self.page.once("load",
+                           lambda: print("Scanning contact info page..."))
             # Check for the popup window and close it if it appears
             self.check_popup(self.page.inner_html('body'))
 
             # Get the contact info url from the page and go to it
-            contact_info_url = self.page.get_attribute("ul[data-cy='dropdown-menu'] > li:nth-child(4) > ul > li > a", "href")
+            contact_info_url = self.page.get_attribute(
+                "ul[data-cy='dropdown-menu'] > li:nth-child(4) > ul > li > a",
+                "href")
             self.page.goto(f"{self.base_url}{contact_info_url}")
 
             # Check if the secret is needed, if not, wait for the page to load up
@@ -117,10 +122,12 @@ class UpworkScanner:
                 self.page.wait_for_selector('div[data-test="userId"]')
 
             # Parse and return the data, else stop and retry
-            if self.parser.parse_contact_info_data(self.page.inner_html('body'), user_data) is None:
+            if self.parser.parse_contact_info_data(self.page.inner_html('body'),
+                                                   user_data) is None:
                 self.pw.stop()
             else:
-                return self.parser.parse_contact_info_data(self.page.inner_html('body'), user_data)
+                return self.parser.parse_contact_info_data(
+                    self.page.inner_html('body'), user_data)
 
         except Exception as err:
             self.handle_error(err, "scan_contact_info_page")
@@ -141,5 +148,6 @@ class UpworkScanner:
         if self.page.is_closed():
             print(f"Page already closed in {method_name} due to a prior error.")
         else:
-            print(f"Failed to scan in method {method_name}. Got err: {err}. Closing the page")
+            print(
+                f"Failed to scan in method {method_name}. Got err: {err}. Closing the page")
             self.page.close()

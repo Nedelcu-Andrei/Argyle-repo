@@ -8,6 +8,7 @@ class CountryFormatError(Exception):
     """
     Custom error raised when the country field has the wrong format
     """
+
     def __init__(self, value: str, message: str) -> None:
         self.value = value
         self.message = message
@@ -18,6 +19,7 @@ class InvalidPhoneNumber(Exception):
     """
     Custom error raised when the phone number is not in E.164 format
     """
+
     def __init__(self, value: str, message: str) -> None:
         self.value = value
         self.message = message
@@ -38,7 +40,8 @@ class Address(BaseModel):
         Validator that checks if country value is in ISO 3166-1 alpha-2 format
         """
         if len(value) > 2:
-            raise CountryFormatError(value=value, message="Invalid value format for field Country")
+            raise CountryFormatError(value=value,
+                                     message="Invalid value format for field Country")
         return True
 
 
@@ -75,5 +78,6 @@ class UpworkUser(BaseModel):
     @validator('phone_number')
     def is_phone_number_valid(cls, value: str) -> bool:
         if not re.search(r"^\+[1-9]\d{1,14}$", value):
-            raise InvalidPhoneNumber(value=value, message="Phone number is not in E.164 format")
+            raise InvalidPhoneNumber(value=value,
+                                     message="Phone number is not in E.164 format")
         return True

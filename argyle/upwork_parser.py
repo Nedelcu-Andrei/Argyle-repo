@@ -22,11 +22,16 @@ class UpworkParser:
 
             # Get valuable data
             name = html_body.css('a[class="profile-title"]::text').get().strip()
-            available_connects = html_body.css('section[data-test="sidebar-available-connects"] > a::text').get().strip()
-            hours_per_week = html_body.css('div[data-test="freelancer-sidebar-availability"] > div:nth-child(2) > span > span::text').get().strip()
-            specialization = html_body.css('div.text-center > p::text').get().strip()
-            categories = [x.strip() for x in html_body.css('section[data-test="sidebar-categories"] > div:nth-child(2) > *::text').getall()]
-            profile_completeness = html_body.css('div.profile-completeness-nudges-tiles-alternative > div > div > small::text').get().strip()
+            available_connects = html_body.css(
+                'section[data-test="sidebar-available-connects"] > a::text').get().strip()
+            hours_per_week = html_body.css(
+                'div[data-test="freelancer-sidebar-availability"] > div:nth-child(2) > span > span::text').get().strip()
+            specialization = html_body.css(
+                'div.text-center > p::text').get().strip()
+            categories = [x.strip() for x in html_body.css(
+                'section[data-test="sidebar-categories"] > div:nth-child(2) > *::text').getall()]
+            profile_completeness = html_body.css(
+                'div.profile-completeness-nudges-tiles-alternative > div > div > small::text').get().strip()
 
             data_dict['name'] = name
             data_dict['available_connects'] = available_connects
@@ -55,32 +60,48 @@ class UpworkParser:
             html_body = Selector(text=html_body)
 
             # Get data related to address
-            city = html_body.css('span[itemprop="locality"]::text').get().strip()
-            state = html_body.css('span[itemprop="state-name"]::text').get().strip()
-            country = html_body.css('span[itemprop="country-name"]::text').get().strip()
-            country_format = coco.convert(names=country, to='ISO2')  # Format the country name
+            city = html_body.css(
+                'span[itemprop="locality"]::text').get().strip()
+            state = html_body.css(
+                'span[itemprop="state-name"]::text').get().strip()
+            country = html_body.css(
+                'span[itemprop="country-name"]::text').get().strip()
+            country_format = coco.convert(names=country,
+                                          to='ISO2')  # Format the country name
 
             # Other data related to the profile object
-            picture_url = html_body.css('div.up-presence-container > img.up-avatar::attr(src)').get().strip()
-            job_employer = html_body.css('section.up-card-section > div > ul > li > div > div > h4[role="presentation"]::text').get().split("|")
+            picture_url = html_body.css(
+                'div.up-presence-container > img.up-avatar::attr(src)').get().strip()
+            job_employer = html_body.css(
+                'section.up-card-section > div > ul > li > div > div > h4[role="presentation"]::text').get().split(
+                "|")
             employer = job_employer[-1].strip() if len(job_employer) > 1 else ""
 
             # Get rest of data available on the page and save it to metadata in the profile object
             # Freelance work related data
-            specialization = html_body.css('section.up-card-section > div > div > div > h2::text').get().strip()
-            hourly_rate = html_body.css('h3[role="presentation"] > span::text').get().strip()
-            hours_per_week = html_body.css('section.up-card-section > div.mt-30 > div:nth-child(2) > span::text').get().strip()
+            specialization = html_body.css(
+                'section.up-card-section > div > div > div > h2::text').get().strip()
+            hourly_rate = html_body.css(
+                'h3[role="presentation"] > span::text').get().strip()
+            hours_per_week = html_body.css(
+                'section.up-card-section > div.mt-30 > div:nth-child(2) > span::text').get().strip()
 
             # Languages and military status data
-            languages = html_body.css('ul.list-unstyled > li > div > strong::text').get().strip()
-            proficiency = html_body.css('ul.list-unstyled > li > div > span::text').get().strip()
+            languages = html_body.css(
+                'ul.list-unstyled > li > div > strong::text').get().strip()
+            proficiency = html_body.css(
+                'ul.list-unstyled > li > div > span::text').get().strip()
             language = f"{languages} {proficiency}"
-            military_status = html_body.css('section.up-card-section > div.mt-30 > div > div > span > strong::text').get().strip()
+            military_status = html_body.css(
+                'section.up-card-section > div.mt-30 > div > div > span > strong::text').get().strip()
 
             # Education related data
-            university = html_body.css('ul.list-unstyled > li > div > h5[role="presentation"]::text').get().strip()
-            degree = html_body.css('ul.list-unstyled > li > div > div::text').get().strip()
-            university_years = html_body.css('ul.list-unstyled > li > div > div.text-muted::text').get().strip()
+            university = html_body.css(
+                'ul.list-unstyled > li > div > h5[role="presentation"]::text').get().strip()
+            degree = html_body.css(
+                'ul.list-unstyled > li > div > div::text').get().strip()
+            university_years = html_body.css(
+                'ul.list-unstyled > li > div > div.text-muted::text').get().strip()
 
             # Set data in the user data profile
             user_profile_data["employer"] = employer
@@ -113,19 +134,27 @@ class UpworkParser:
             info_html = Selector(text=html_body)
 
             # Get name related data
-            full_name = info_html.css('div[data-test="userName"]::text').get().strip().replace("\n", "").split(" ")
+            full_name = info_html.css(
+                'div[data-test="userName"]::text').get().strip().replace("\n",
+                                                                         "").split(
+                " ")
             first_name = full_name[0] if len(full_name) > 0 else ""
             last_name = full_name[-1] if len(full_name) > 1 else ""
 
             # Get address related data
-            street_address = info_html.css('span[data-test="addressStreet"]::text').get().strip()
-            ap_number = info_html.css('span[data-test="addressStreet2"]::text').get().strip()
-            postal_code = info_html.css('span[data-test="addressZip"]::text').get().strip()
+            street_address = info_html.css(
+                'span[data-test="addressStreet"]::text').get().strip()
+            ap_number = info_html.css(
+                'span[data-test="addressStreet2"]::text').get().strip()
+            postal_code = info_html.css(
+                'span[data-test="addressZip"]::text').get().strip()
 
             # Get email and phone data
             phone_number = info_html.css('div[data-test="phone"]::text').get()
-            phone_number_format = format_phone_number(phone_number, implied_phone_region='US')  # Format the phone data
-            e_mail = info_html.css('div[data-test="userEmail"]::text').get().strip()
+            phone_number_format = format_phone_number(phone_number,
+                                                      implied_phone_region='US')  # Format the phone data
+            e_mail = info_html.css(
+                'div[data-test="userEmail"]::text').get().strip()
 
             # Set it in the user data profile
             user_profile_data["first_name"] = first_name
