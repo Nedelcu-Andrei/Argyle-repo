@@ -56,7 +56,7 @@ class UpworkScanner:
 
     def scan_homepage(self):
         """
-        Scrape the homepage of the website for valuable data.
+        Scan the homepage of the website for valuable data.
         """
         try:
             self.page.once("load", lambda: print("Scanning the homepage.."))
@@ -74,7 +74,7 @@ class UpworkScanner:
 
     def scan_profile_page(self):
         """
-        Scrape the profile page for the user profile data.
+        Scan the profile page for the user profile data.
         """
         try:
             self.page.once("load", lambda: print("Scanning profile page..."))
@@ -96,7 +96,7 @@ class UpworkScanner:
 
     def scan_contact_info_page(self):
         """
-        Scrape contact info page for the user profile data.
+        Scan contact info page for the user profile data.
         """
         try:
             self.page.once("load", lambda: print("Scanning contact info page..."))
