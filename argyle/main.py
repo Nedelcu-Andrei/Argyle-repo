@@ -1,15 +1,14 @@
-from upwork_scanner import *
+from upwork_scanner import UpworkScanner
+from upwork_parser import UpworkParser
 
 
 def run():
-    cls = UpworkScraper()
+    parse = UpworkParser()
+    cls = UpworkScanner(parse)
     cls.login()
-    cls.scrape_homepage()
-    cls.collect_homepage_data()
-    cls.scrape_profile_page()
-    cls.collect_profile_data()
-    cls.scrape_contact_info_page()
-    return cls.collect_contact_info_data()
+    cls.scan_homepage()
+    cls.scan_profile_page()
+    return cls.scan_contact_info_page()
 
 
 def main():

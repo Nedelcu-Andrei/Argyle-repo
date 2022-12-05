@@ -33,7 +33,7 @@ class Address(BaseModel):
     country: str
 
     @validator("country")
-    def valid_country_name_format(cls, value):
+    def valid_country_name_format(cls, value: str) -> bool:
         """
         Validator that checks if country value is in ISO 3166-1 alpha-2 format
         """
@@ -62,7 +62,7 @@ class UpworkUser(BaseModel):
     updated_at: str
 
     @validator('id', 'account')
-    def is_valid_uuid(cls, value):
+    def is_valid_uuid(cls, value: str) -> bool:
         """
         Validator that checks if the value is a valid UUID.
         """
@@ -73,7 +73,7 @@ class UpworkUser(BaseModel):
             return False
 
     @validator('phone_number')
-    def is_phone_number_valid(cls, value):
+    def is_phone_number_valid(cls, value: str) -> bool:
         if not re.search(r"^\+[1-9]\d{1,14}$", value):
             raise InvalidPhoneNumber(value=value, message="Phone number is not in E.164 format")
         return True

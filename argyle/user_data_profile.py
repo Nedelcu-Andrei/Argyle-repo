@@ -24,3 +24,12 @@ user_data = {
             "gender": "",
             "metadata": {}
             }
+
+data_dict = {
+    "name": "",
+    "specialization": "",
+    "available_connects": "",
+    "hours_per_week": "",
+    "categories": "",
+    "profile_completeness": ""
+}
