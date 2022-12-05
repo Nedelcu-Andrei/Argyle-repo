@@ -19,11 +19,6 @@ class UpworkParserTests(unittest.TestCase):
         self.data_dict = data_dict
         self.user_profile_data = user_data
 
-    @pytest.fixture
-    def load_html_body(self, body):
-        html_body = Selector(text=body)
-        return html_body
-
     def test_invalid_parse_homepage(self):
         assert self.parser.parse_homepage(self.invalid_data_list, self.data_dict) is None
 
