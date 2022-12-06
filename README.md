@@ -3,7 +3,8 @@
 ## Overview of the project
 
 - To log-in and scan a upwork homepage and profile account data:
-  - Level_1 task data saved as "level_1_task.json"
+  - Level_1 task data saved as "level_1_task.json".
+  - Level_2 task data saved as "level_2_task.json"
   - Level_2 task data structured as per model presented on in the task. The object of the data was serialized to a pydantic model.
   - Validators added in pydantic model for some type of data formats that were expected.
   - Missing fields handled as a check that completes them with a string that specifies that the data is missing.
