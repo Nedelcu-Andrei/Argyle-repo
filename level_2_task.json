@@ -1,0 +1,37 @@
+{
+  "id": "No available information.",
+  "account": "No available information.",
+  "employer": "All Party No Work Company",
+  "created_at": "No available information.",
+  "updated_at": "No available information.",
+  "first_name": "Bobby",
+  "last_name": "Backupy",
+  "full_name": "Bobby Backupy",
+  "email": "b******nt@argyle.io",
+  "phone_number": "+19176987366",
+  "birth_date": "No available information.",
+  "picture_url": "https://www.upwork.com/profile-portraits/c1mLLxjwmuM_8hrcf2IDa4AajZFNGdDSKleHcddaSlYdha-Z2SdY2nLtbFdizwfo-Z",
+  "address": {
+    "line1": "Party street 100",
+    "line2": "1",
+    "city": "Miami",
+    "state": "FL",
+    "postal_code": "123456",
+    "country": "US"
+  },
+  "ssn": "No available information.",
+  "martial_status": "No available information.",
+  "gender": "No available information.",
+  "metadata": {
+    "specialization": "Master Blockain IPO Executive management with Phd",
+    "hourly_rate": "$500.00/hr",
+    "hours_per_week": "More than 30 hrs/week",
+    "language": "English: Native or Bilingual",
+    "military_status": "Military Veteran",
+    "education": {
+      "university": "All Party no Study University",
+      "degree": "Doctor of Philosophy (PhD), Computer science",
+      "university_years": "1987-2010"
+    }
+  }
+}

@@ -1,16 +1,11 @@
 from scrapy import Selector
 import json
-from user_data_profile import user_data
 import country_converter as coco
 from phonenumberfmt import format_phone_number
 from data_model import UpworkUser
 
 
 class UpworkParser:
-    def __init__(self):
-        self.base_url = "https://www.upwork.com"
-        self.user_profile_data = user_data
-
     def parse_homepage(self, html_body: str, data_dict: dict):
         """
         Collect all data scraped from the homepage and save it to a json file.
@@ -23,7 +18,8 @@ class UpworkParser:
             # Get valuable data
             name = html_body.css('a[class="profile-title"]::text').get().strip()
             available_connects = html_body.css(
-                'section[data-test="sidebar-available-connects"] > a::text').get().strip()
+                'section[data-test="sidebar-available-connects"] > '
+                'a::text').get().strip()
             hours_per_week = html_body.css(
                 'div[data-test="freelancer-sidebar-availability"] > div:nth-child(2) > span > span::text').get().strip()
             specialization = html_body.css(
@@ -41,11 +37,11 @@ class UpworkParser:
             data_dict['profile_completeness'] = profile_completeness
 
             # Serialize it to json
-            data_json = json.dumps(data_dict, indent=2)
+            data_str = json.dumps(data_dict, indent=2)
 
             # Create the json file with the content
             with open("../level_1_task.json", "w") as outfile:
-                outfile.write(data_json)
+                outfile.write(data_str)
 
         except Exception as err:
             self.handle_error(err, "parse_homepage")
@@ -170,9 +166,14 @@ class UpworkParser:
             self.check_empty_fields(user_profile_data)
 
             # Serialize the fields to a pydantic data model
-            user = UpworkUser.parse_obj(user_profile_data)
-            print(user_profile_data)
-            print(user)
+            UpworkUser.parse_obj(user_profile_data)
+
+            # Serialize it to json
+            data_str = json.dumps(user_profile_data, indent=2)
+
+            # Save output as a json file
+            with open("../level_2_task.json", "w") as outfile:
+                outfile.write(data_str)
 
             return user_profile_data
 

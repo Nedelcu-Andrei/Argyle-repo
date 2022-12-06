@@ -122,12 +122,13 @@ class UpworkScanner:
                 self.page.wait_for_selector('div[data-test="userId"]')
 
             # Parse and return the data, else stop and retry
-            if self.parser.parse_contact_info_data(self.page.inner_html('body'),
-                                                   user_data) is None:
+            contact_info_result = self.parser.parse_contact_info_data(
+                self.page.inner_html('body'), user_data)
+
+            if contact_info_result is None:
                 self.pw.stop()
             else:
-                return self.parser.parse_contact_info_data(
-                    self.page.inner_html('body'), user_data)
+                return contact_info_result
 
         except Exception as err:
             self.handle_error(err, "scan_contact_info_page")
