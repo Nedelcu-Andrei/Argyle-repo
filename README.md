@@ -11,6 +11,7 @@
   - Retry added in case the scanning fails.
   - Unit-tests for for the parser and integration tests for the scanner.
   - The whole process is split between the a scanning process and a parsing process.
+  - Made the docker implementation but since it's running with "headless=False" it will need a server to run.
   
   **Note: From Scrapy was used only the Selector import for parsing the HTML body of the responses. Was used instead of the playwright selectors for better
   error managemant and easier implementations of conditions in the code.
